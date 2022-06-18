@@ -27,7 +27,7 @@ class Agent:
 
         model.add(Dense(24,input_dim = self.state_size, activation = 'relu'))
         model.add(Dense(24,activation = 'relu'))
-        model.add(Dense(self.action_size, activation='linear'))
+        model.add(Dense(self.action_size, activation='relu'))
 
         model.compile(loss='mse', optimizer=Adam(learning_rate=self.learning_rate))
 
@@ -113,7 +113,7 @@ class Game:
     
     def step(self,action):
 
-        """ action can be one of 5 integers (0,1,2,3,4)
+        """ action can be one of 4 integers (0,1,2,3)
         action 0: move camera up
         action 1: move camera right
         action 2: move camera down

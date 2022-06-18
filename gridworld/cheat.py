@@ -21,7 +21,7 @@ class Agent:
         self.learning_rate = 0.01
 
         self.model=self._build_model()
-        self.load('model_output/third_agent/weights_0090.hdf5')
+        #self.load('model_output/third_agent/weights_0090.hdf5')
         
     def _build_model(self):
         model = Sequential()

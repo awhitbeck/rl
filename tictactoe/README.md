@@ -92,7 +92,7 @@ The agent perform N batches of M games.  It tracks it average end-of-game reward
 per batch and reports that to the standard output.  The action taken by the agent 
 is either a random action or based on a policy.  The policy is given by: 
 
-$\pi(s) = argmax_a q(s,a)$.
+$\pi(s) = \underset{a}{\rm{argmax}}~q(s,a)$.
 
 This random choice enforces some amount of exploration.  The probability of 
 a random action is given by `RLAgent.lambda`.  This probability is initiallly

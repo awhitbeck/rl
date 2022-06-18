@@ -18,6 +18,7 @@ store in the `state` data member.  There are functions to encoode
 board) the state:
 
 `encodeState()`
+
 `decodeState()`
 
 The first method makes `Game.state` consistent with `Game.board` and
@@ -29,16 +30,17 @@ decode the state.
 You can play the computer interactively using the `interactive_play()`
 method.  You will be asked to give a space to place an X, you should
 give the index of the unrolled board.  In other words,
-#index   row,column
-   0   -> 0 , 0  
-   1   -> 0 , 1
-   2   -> 0 , 2
-   3   -> 1 , 0
-   4   -> 1 , 1
-   5   -> 1 , 2
-   6   -> 2 , 0
-   7   -> 2 , 1
-   8   -> 2 , 2
+|index |  row,column    |
+------------------------
+|   0  | 0 , 0          |
+|   1  | 0 , 1		|
+|   2  | 0 , 2		|
+|   3  | 1 , 0		|
+|   4  | 1 , 1		|
+|   5  | 1 , 2		|
+|   6  | 2 , 0		|
+|   7  | 2 , 1		|
+|   8  | 2 , 2		|
 
 You can also play the computer through `step()`.  This method takes
 an action, evolves the game forward and returns the new state and the

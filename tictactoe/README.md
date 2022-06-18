@@ -30,6 +30,7 @@ decode the state.
 You can play the computer interactively using the `interactive_play()`
 method.  You will be asked to give a space to place an X, you should
 give the index of the unrolled board.  In other words,
+
 |index |  row,column    |
 ------------------------
 |   0  | 0 , 0          |

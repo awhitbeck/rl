@@ -1,6 +1,6 @@
 # Code for tic-tac-toe
 
-## Game simulator
+# Game simulator
 `tictactoe.py` contains a class that implements the game of tic-tac-toe.
 It has two internal representations of the state.  The first is an list
 of 9 elements, which represent the unrolled 3x3 game board.
@@ -65,3 +65,46 @@ If the user would like to check if the game has ended, they can call
 
 The method `Game.reset()` can be used to reset the game.  This method will
 clear the board and with 50% probability let the computer play first.  
+
+# Benchmark Reinforcement (RL) Agents
+
+Currently only one benchmark RL Agents has been developed for learning
+tic-tac-toe. This agent implements a TD-$\lambda$ type algorithm. See
+`RLAgent` defined in `RLAgent.py`.  
+
+This class maintains both a value 
+function, `RLAgent.value_function`, and a Q value function, 
+`RLAgent.q_function`; both are dictionaries whose keys are states of
+the game. The vlues of th `RLAgent.value_function` is a list of two elements, 
+one maintains the average of the *discounted return*, averaged over all actions 
+taken from this state, the other maintains the number of times a state was 
+transitioned out of.  The *discounted return* is given by: 
+
+$G_t = \Sigma_{k=0}^{k=\inf}\gamma^kR_{t+k+1}$
+
+Where the subscript refers to a fix time step, $R$ is the reward at a given time 
+step and $\gamma$ is the discount factor.  The values of `RLAgent.q_function`
+are another dictionary that is keyed on actions taken from the state.  The values 
+of these subdictionaries are the average *discounted return*.  This structure 
+makes it easy to search for the maximum of the q-function, $q(s,a)$.
+
+The agent perform N batches of M games.  It tracks it average end-of-game reward
+per batch and reports that to the standard output.  The action taken by the agent 
+is either a random action or based on a policy.  The policy is given by: 
+
+$\pi(s) = argmax_a q(s,a)$.
+
+This random choice enforces some amount of exploration.  The probability of 
+a random action is given by `RLAgent.lambda`.  This probability is initiallly
+1 and is decayed every batch by `RLAgent.decay`.  
+
+## Performance of agent
+
+This agent has been trained over several hundred batch of 10k games when 
+playing a simple AI that makes random selections.  When the agent always
+plays first, it was found that the average end-of-game reward was ~0.98.  When
+players randomly go first with equal probability, the agent acheived an 
+average end-of-game reward of .88.  The Figure below shows the average 
+end-of-game reward versus batch number. 
+
+![This is an image](https://github.com/awhitbeck/rl/blob/main/tictactoe/TDL_tictactoe.png)

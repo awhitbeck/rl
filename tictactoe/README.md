@@ -69,8 +69,10 @@ clear the board and with 50% probability let the computer play first.
 # Benchmark Reinforcement (RL) Agents
 
 Currently only one benchmark RL Agents has been developed for learning
-tic-tac-toe. This agent implements a TD-$\lambda$ type algorithm. See
-`RLAgent` defined in `RLAgent.py`.  
+tic-tac-toe. This agent implements a TD(0) type algorithm. See
+`RLAgent` defined in `RLAgent.py`.  The agent maintains a Q-value
+functiion and continuously update an $\epsilon$-greedy policy base on
+Q-values.  
 
 This class maintains both a value 
 function, `RLAgent.value_function`, and a Q value function, 

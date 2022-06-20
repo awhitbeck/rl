@@ -1,13 +1,13 @@
 import random
-from RandomAgent import *
+
 class Game:
 
-    def __init__(self):
+    def __init__(self,agent):
         self.boardSize=3
         self.board = [0]*self.boardSize**2
         self.state = 0
         self.first_prob = 0.5
-        self.game_ai = RandomAgent()
+        self.game_ai = agent
         self.win_combo = {"H1":[0,1,2],
                           "H2":[3,4,5],
                           "H3":[6,7,8],
@@ -44,10 +44,13 @@ class Game:
     with probability 1-self.first_prob have game AI play first
     """
     def reset(self):
+        #print('Game.reset()')
         self.board = [0]*9
+        self.encodeState()
         if random.randint(0,1000) >= 1000*self.first_prob :
-            action = self.game_ai.play(self.board)
+            action = self.game_ai.play(self.state)
             self.board[action]=2
+        self.encodeState()
             
     """function that returns the status of the 
        game.
@@ -97,7 +100,7 @@ class Game:
             if not self.win()==0: break
 
             #allow game ai to play...
-            r=self.game_ai.play(self.board)
+            r=self.game_ai.play(self.state)
             self.board[r]=2
             self.encodeState()
 
@@ -130,9 +133,11 @@ class Game:
         else:
             self.board[action]=1
             self.encodeState()
+            #print("Game.step()")
+            #self.print()
             if self.win()==0: 
                 #allow game ai to play...
-                r=self.game_ai.play(self.board)
+                r=self.game_ai.play(self.state)
                 self.board[r]=2
                 self.encodeState()
 

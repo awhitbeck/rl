@@ -91,6 +91,25 @@ class RLAgent:
             action = random.randint(0,8)
         return action
 
+    """
+    returns the maximum value of Q for a given state
+    """
+    def argMaxQ(self,state):
+        max_action=-9
+        max_q_value=-9999
+        for key in self.q_function[state]:
+            if self.q_function[state][key][0] > max_q_value:
+                max_q_value=self.q_function[state][key][0]
+                max_action=key
+        return max_action
+
+    """
+    returns the action that has the maximum Q value
+    for a given state
+    """
+    def MaxQ(self,state):
+        return self.q_function[state][self.argMaxQ(state)][0]
+
     """ 
     returns an action based on a policy
     policy is given by \pi(s) = argmax_{a} q(s,a)
@@ -103,17 +122,16 @@ class RLAgent:
             self.game.board = self.invert_board(self.game.board)
             #self.game.print()
             self.game.encodeState()
-        if not state in self.q_function:
-            return self.random_action(state)
+        if not self.game.state in self.q_function:
+            return self.random_action(self.game.state)
         else:
-            max_action=-9
-            max_q_value=-9999
-            for key in self.q_function[state]:
-                if self.q_function[state][key][0] > max_q_value:
-                    max_q_value=self.q_function[state][key][0]
-                    max_action=key
-            return max_action
+            print(self.q_function[self.game.state])
+            return self.argMaxQ(self.game.state)
 
+    """
+    returns an action given a state based on an 
+    epsilon-greedy policy
+    """
     def play(self,state):
         self.game.state = state
         self.game.decodeState()
@@ -144,7 +162,8 @@ class RLAgent:
                     #print("reward: ",reward," previous statee: ",self.previous_state)
                     if self.current_state in self.value_function : 
                         self.iterate_value_function(self.previous_state,reward+self.gamma*self.value_function[self.current_state][0])
-                        self.iterate_q_function(self.previous_state,action,reward+self.gamma*self.value_function[self.current_state][0])
+                        #self.iterate_q_function(self.previous_state,action,reward+self.gamma*self.value_function[self.current_state][0])
+                        self.iterate_q_function(self.previous_state,action,reward+self.gamma*self.MaxQ(self.current_state))
                     else :
                         self.iterate_value_function(self.previous_state,reward)
                         self.iterate_q_function(self.previous_state,action,reward)

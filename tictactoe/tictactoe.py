@@ -91,9 +91,19 @@ class Game:
 
         while(self.win()==0):
             self.print()
-            action = int(input("What position do you want to ploy?"))
+            while True :
+                try :
+                    action = int(input("What position do you want to ploy?"))
+                    break
+                except ValueError:
+                    print('invalid...')
             while not self.board[action]==0 :
-                action = int(input("Can't play there... Try again:"))
+                while True :
+                    try : 
+                        action = int(input("Can't play there... Try again:"))
+                        break
+                    except ValueError:
+                        print('invalid...')
 
             self.board[action]=1
             self.encodeState()
